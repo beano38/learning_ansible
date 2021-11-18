@@ -1,0 +1,7 @@
+---
+hostname: p2
+
+interfaces:
+  - name: Loopback
+    number: 0
+    ipv4: 1.1.1.2 255.255.255.255

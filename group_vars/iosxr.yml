@@ -1,0 +1,6 @@
+---
+software:
+  os_type: iosxr
+
+nso:
+  ned: cisco-iosxr-cli-7.36

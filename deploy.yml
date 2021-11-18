@@ -1,0 +1,43 @@
+---
+- hosts: all
+  connection: local
+  gather_facts: False
+  collections:
+    - cisco.cml
+    - cisco.iosxr
+
+  tasks:
+    - name: Gimme some info
+      debug:
+        msg: "{{ software.os_type }}"
+
+    - name: Render IOSXR Config
+      template:
+        src: templates/xrconfig.j2
+        dest: "temp/{{ hostname }}.txt"
+      when: software.os_type == "iosxr"
+
+
+    - name: Render IOSXE Config
+      template:
+        src: templates/xeconfig.j2
+        dest: "temp/{{ hostname }}.txt"
+      when: software.os_type == "iosxe"
+
+    - name: Create the lab
+      cml_lab:
+        host: 192.168.1.77
+        user: admin
+        password: "{{ password }}"
+        lab: Uploaded by Ansible
+        state: present
+        file: topologies/cml_topology.yaml
+      run_once: True
+      tags: [ 'never', 'cml_push' ]
+
+    - name: Dump the config on the devices
+      iosxr_config:
+        src: "temp/{{ hostname }}.txt"
+        replace: config
+        backup: yes
+      

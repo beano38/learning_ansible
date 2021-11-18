@@ -1,0 +1,10 @@
+---
+hostname: pe1
+
+interfaces:
+  - name: Loopback
+    number: 0
+    ipv4: 1.1.2.1 255.255.255.255
+  - name: GigabitEthernet
+    number: 0/0/0/0
+    ipv4: 10.0.1.5 255.255.255.252

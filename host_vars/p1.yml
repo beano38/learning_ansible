@@ -1,0 +1,11 @@
+---
+hostname: p1
+mgmt_ip: 172.16.100.1
+
+interfaces:
+  - name: Loopback
+    number: 0
+    ipv4: 1.1.1.1 255.255.255.255
+  - name: GigabitEthernet
+    number: 0/0/0/0
+    ipv4: 10.0.0.1 255.255.255.252

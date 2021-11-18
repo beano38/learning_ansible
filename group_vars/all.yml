@@ -1,0 +1,5 @@
+---
+nameserver: 8.8.8.8
+ntp_server: ntp0.local.test
+
+bgp_asn: 65000

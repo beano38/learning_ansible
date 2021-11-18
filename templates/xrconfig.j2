@@ -1,0 +1,58 @@
+!! IOS XR 
+!
+hostname {{ hostname }}
+logging console disable
+username cisco
+ group root-lr
+ group cisco-support
+ password 7 060506324F41
+!
+ntp
+ server {{ ntp_server }}
+ update-calendar
+!
+line console
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-timeout 0
+!
+line default
+ exec-timeout 0 0
+ absolute-timeout 0
+ session-timeout 0
+!
+call-home
+ service active
+ contact smart-licensing
+ profile CiscoTAC-1
+  active
+  destination transport-method http
+ !
+!
+{% for interface in interfaces %}
+interface {{ interface.name }}{{ interface.number}}
+ ipv4 address {{ interface.ipv4 }}
+{% if interface.name != "Loopback" %}
+ mtu 9198
+{% endif %}
+ no shut
+!
+{% endfor %}
+!
+router ospf 1
+ area 0
+  interface Loopback0
+  !
+  interface GigabitEthernet0/0/0/0
+   network point-to-point
+   passive disable
+  !
+ !
+!
+mpls oam
+!
+mpls ldp
+ interface GigabitEthernet0/0/0/0
+ !
+!
+end

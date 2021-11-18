@@ -1,0 +1,7 @@
+---
+hostname: pe6
+
+interfaces:
+  - name: Loopback
+    number: 0
+    ipv4: 1.1.2.6 255.255.255.255

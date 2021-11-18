@@ -1,0 +1,7 @@
+---
+hostname: pe3
+
+interfaces:
+  - name: Loopback
+    number: 0
+    ipv4: 1.1.2.3 255.255.255.255

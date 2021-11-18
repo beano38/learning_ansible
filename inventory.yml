@@ -1,0 +1,17 @@
+---
+all:
+  children:
+    p:
+      hosts:
+        p[1:2]:
+    pe:
+      hosts:
+        pe[1:6]:
+
+    iosxr:
+      hosts:
+        p[1:2]:
+        pe[1:5]:
+    iosxe:
+      hosts:
+        pe6:
