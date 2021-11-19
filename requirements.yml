@@ -1,0 +1,4 @@
+---
+collections:
+  - name: cisco.nso
+  - name: cisco.iosxr
