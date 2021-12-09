@@ -30,12 +30,14 @@ module ntp {
 
     // may replace this with other ways of refering to the devices.
     leaf-list device {
+      tailf:info "Devices to add to NTP service";
       type leafref {
         path "/ncs:devices/ncs:device/ncs:name";
       }
     }
 
     leaf ntp_server {
+      tailf:info "IPv4 Address of NTP Server";
       type string;
     }
   }

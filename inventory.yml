@@ -7,6 +7,15 @@ all:
     pe:
       hosts:
         pe[1:6]:
+    east:
+      hosts:
+        xr9kv:
+        n9kv:
+        csr1kv:
+        nso.local:
+    servers:
+      hosts:
+        nso.local:
 
     iosxr:
       hosts:

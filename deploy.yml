@@ -1,43 +1,69 @@
 ---
-- hosts: all
+# - hosts: all
+#   connection: local
+#   gather_facts: False
+#   collections:
+#     - cisco.cml
+#     - cisco.iosxr
+#     - cisco.nso
+
+#   tasks:
+    # - name: Gimme some info
+    #   debug:
+    #     msg: "{{ software.os_type }}"
+
+    # - name: Render IOSXR Config
+    #   template:
+    #     src: templates/xrconfig.j2
+    #     dest: "temp/{{ hostname }}.txt"
+    #   when: software.os_type == "iosxr"
+
+
+    # - name: Render IOSXE Config
+    #   template:
+    #     src: templates/xeconfig.j2
+    #     dest: "temp/{{ hostname }}.txt"
+    #   when: software.os_type == "iosxe"
+
+    # - name: Create the lab
+    #   cml_lab:
+    #     host: 192.168.1.77
+    #     user: admin
+    #     password: "{{ password }}"
+    #     lab: Uploaded by Ansible
+    #     state: present
+    #     file: topologies/cml_topology.yaml
+    #   run_once: True
+    #   tags: [ 'never', 'cml_push' ]
+
+    # - name: Dump the config on the devices
+    #   iosxr_config:
+    #     src: "temp/{{ hostname }}.txt"
+    #     replace: config
+    #     backup: yes
+
+
+- hosts: nso.local
   connection: local
   gather_facts: False
   collections:
-    - cisco.cml
-    - cisco.iosxr
-
+    - cisco.nso
   tasks:
-    - name: Gimme some info
+    - name: Gimme info
       debug:
-        msg: "{{ software.os_type }}"
+        msg: "{{ region_name  }}"
 
-    - name: Render IOSXR Config
-      template:
-        src: templates/xrconfig.j2
-        dest: "temp/{{ hostname }}.txt"
-      when: software.os_type == "iosxr"
-
-
-    - name: Render IOSXE Config
-      template:
-        src: templates/xeconfig.j2
-        dest: "temp/{{ hostname }}.txt"
-      when: software.os_type == "iosxe"
-
-    - name: Create the lab
-      cml_lab:
-        host: 192.168.1.77
-        user: admin
+    - name: Configure NTP
+      nso_config:
+        url: "{{ url }}"
+        username: "{{ username }}"
         password: "{{ password }}"
-        lab: Uploaded by Ansible
-        state: present
-        file: topologies/cml_topology.yaml
+        data:
+          ntp:ntp:
+          - name: "{{ region_name }}"
+            device:
+            - csr1kv
+            - n9kv
+            - xr9kv
+            ntp_server: "{{ ntp_server }}"
       run_once: True
-      tags: [ 'never', 'cml_push' ]
-
-    - name: Dump the config on the devices
-      iosxr_config:
-        src: "temp/{{ hostname }}.txt"
-        replace: config
-        backup: yes
-      
